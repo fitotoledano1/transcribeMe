@@ -17,6 +17,7 @@ final class TranscriberViewModel: ObservableObject {
     @Published var isRecording: Bool = false {
         didSet {
             print("Published var 'isRecording' is now set to:", isRecording)
+            print("test")
         }
     }
     
