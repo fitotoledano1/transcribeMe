@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RecordButton: View {
     
-    
     @ObservedObject var viewModel = TranscriberViewModel()
     
     var body: some View {

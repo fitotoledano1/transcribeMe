@@ -133,6 +133,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
 extension TranscriberViewModel {
     func transcribeSpeech() {
         print("Transcribing speech...")
+        NetworkManager.shared.uploadAudioFile()
     }
 }
 

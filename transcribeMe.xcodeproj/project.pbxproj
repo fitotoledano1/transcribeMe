@@ -16,6 +16,7 @@
 		B069AA0425C23877006E87E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B069AA0325C23877006E87E6 /* Assets.xcassets */; };
 		B069AA0725C23877006E87E6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B069AA0625C23877006E87E6 /* Preview Assets.xcassets */; };
 		B069AA1125C245BE006E87E6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B069AA1025C245BE006E87E6 /* Constants.swift */; };
+		B09182E225C2F7230040F55B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09182E125C2F7230040F55B /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B069AA0625C23877006E87E6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B069AA0825C23877006E87E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B069AA1025C245BE006E87E6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B09182E125C2F7230040F55B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,12 +92,13 @@
 			children = (
 				B069AA0825C23877006E87E6 /* Info.plist */,
 				B069A9FF25C23877006E87E6 /* transcribeMeApp.swift */,
-				B014A42425C2CA9700018D6F /* Views */,
-				B09182D925C2E7590040F55B /* ViewModel */,
 				B069AA0325C23877006E87E6 /* Assets.xcassets */,
 				B014A42625C2CA9A00018D6F /* Helpers */,
+				B09182E425C2F76C0040F55B /* Managers */,
 				B014A42225C2CA9300018D6F /* Models */,
 				B069AA0525C23877006E87E6 /* Preview Content */,
+				B09182D925C2E7590040F55B /* ViewModel */,
+				B014A42425C2CA9700018D6F /* Views */,
 			);
 			path = transcribeMe;
 			sourceTree = "<group>";
@@ -114,6 +117,14 @@
 				B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B09182E425C2F76C0040F55B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B09182E125C2F7230040F55B /* NetworkManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +200,7 @@
 				B069AA0225C23877006E87E6 /* TranscribeSpeechView.swift in Sources */,
 				B069AA0025C23877006E87E6 /* transcribeMeApp.swift in Sources */,
 				B014A43625C2DE3D00018D6F /* RecordButton.swift in Sources */,
+				B09182E225C2F7230040F55B /* NetworkManager.swift in Sources */,
 				B014A42025C2CA6400018D6F /* Transcription.swift in Sources */,
 				B069AA1125C245BE006E87E6 /* Constants.swift in Sources */,
 				B014A43325C2DBB300018D6F /* TranscribeViewModel.swift in Sources */,
