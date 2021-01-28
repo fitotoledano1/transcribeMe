@@ -23,23 +23,9 @@ struct TranscribeSpeechView: View {
                 Spacer()
                 RecordButton(isRecording: $viewModel.isRecording)
             }
-        }.onAppear {
-            //
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

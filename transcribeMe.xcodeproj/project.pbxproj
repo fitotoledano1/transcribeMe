@@ -56,7 +56,6 @@
 			children = (
 				B069AA0125C23877006E87E6 /* TranscribeSpeechView.swift */,
 				B014A42F25C2DB1300018D6F /* TranscribedTextView.swift */,
-				B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */,
 				B014A43525C2DE3D00018D6F /* RecordButton.swift */,
 			);
 			path = Views;
@@ -91,11 +90,12 @@
 			children = (
 				B069AA0825C23877006E87E6 /* Info.plist */,
 				B069A9FF25C23877006E87E6 /* transcribeMeApp.swift */,
+				B014A42425C2CA9700018D6F /* Views */,
+				B09182D925C2E7590040F55B /* ViewModel */,
 				B069AA0325C23877006E87E6 /* Assets.xcassets */,
 				B014A42625C2CA9A00018D6F /* Helpers */,
 				B014A42225C2CA9300018D6F /* Models */,
 				B069AA0525C23877006E87E6 /* Preview Content */,
-				B014A42425C2CA9700018D6F /* Views */,
 			);
 			path = transcribeMe;
 			sourceTree = "<group>";
@@ -106,6 +106,14 @@
 				B069AA0625C23877006E87E6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B09182D925C2E7590040F55B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
