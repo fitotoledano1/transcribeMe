@@ -25,8 +25,8 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     
     func recordButtonTapped() {
         print("Record button tapped.")
-
-        isRecording ? stopRecording() : startRecordingSession()
+        
+        isRecording ? stopRecording(success: true) : startRecordingSession()
         isRecording.toggle()
     }
     
@@ -41,12 +41,13 @@ final class TranscriberViewModel: NSObject, ObservableObject {
                 DispatchQueue.main.async {
                     switch allowed {
                     case true:
-                        // it's allowed to record, start recording
-                        print("Recording is allowed.")
+                        print("Recording granted transcribeMe permission to access this iPhone's microphone.")
+                        print("Recording session session started successfully.")
+                        startRecording()
                     case false:
                         // show an alert
-                        print("Recording is now allowed.")
-                        stopRecording()
+                        print("User didn't grant transcribeMe permissions to access the Microphone.")
+                        stopRecording(success: false)
                     }
                 }
             })
@@ -54,10 +55,6 @@ final class TranscriberViewModel: NSObject, ObservableObject {
             print("There was an error with the Audio Session.")
         }
     }
-    
- 
-    
-
     
     func startRecording() {
         print("Started recording...")
@@ -73,35 +70,26 @@ final class TranscriberViewModel: NSObject, ObservableObject {
         ]
         
         do {
-            
             audioRecorder = try AVAudioRecorder(url: audioUrl, settings: settings)
-            //audioRecorder?.delegate = self
+            audioRecorder?.delegate = self
             audioRecorder?.record()
         } catch {
             print("There was an error starting to record.")
         }
-        
-        //audioRecorder?.record()
-        
     }
     
     func transcribeSpeech() {
         print("Transcribing speech...")
     }
     
-    func stopRecording() {
-        print("Stopped recording.")
-        
-        audioRecorder?.stop()
-        audioRecorder = nil
-    }
+    
     
     class func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = paths[0]
         return documentDirectory
     }
-
+    
     class func getAudioRecordingURL() -> URL {
         return getDocumentsDirectory().appendingPathComponent("audioRecording.m4a")
     }
@@ -109,11 +97,36 @@ final class TranscriberViewModel: NSObject, ObservableObject {
 }
 
 extension TranscriberViewModel: AVAudioRecorderDelegate {
+    
+    func stopRecording(success: Bool) {
+        print("Stopped recording.")
+        
+        audioRecorder?.stop()
+        audioRecorder = nil
+        
+        print("Ending recording session...")
+        recordingSession = nil
+        
+        switch success {
+        case true:
+            print("Audio was saved successfully.")
+        case false:
+            print("Recording stopped with an error.")
+        }
+        
+    }
+    
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        print(flag)
+        switch flag {
+        case true:
+            stopRecording(success: true)
+        case false:
+            stopRecording(success: false)
+        }
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         print(error?.localizedDescription ?? "")
     }
+    
 }
