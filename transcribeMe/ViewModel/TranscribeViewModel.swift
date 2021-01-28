@@ -23,8 +23,10 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
     
-    
-    // MARK: - Methods to start the recording workflow
+}
+
+// MARK: - Methods to start the recording workflow
+extension TranscriberViewModel {
     func recordButtonTapped() {
         print("Record button tapped.")
         
