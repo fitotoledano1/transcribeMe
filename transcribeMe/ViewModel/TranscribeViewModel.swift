@@ -67,8 +67,8 @@ extension TranscriberViewModel {
         print(audioUrl.absoluteURL)
         
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
+            AVFormatIDKey: Int(kAudioFormatFLAC),
+            AVSampleRateKey: 16000,
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
@@ -131,8 +131,8 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
 
 // MARK: - Google Cloud Platform Speech-To-Text methods
 extension TranscriberViewModel {
-    func transcribeSpeech() {
-        print("Transcribing speech...")
+    func uploadAudioFile() {
+        print("Uploading audio file to background...")
         NetworkManager.shared.uploadAudioFile()
     }
 }
