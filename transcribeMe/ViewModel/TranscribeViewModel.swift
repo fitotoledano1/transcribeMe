@@ -8,7 +8,7 @@
 import Foundation
 import AVKit
 
-final class TranscriberViewModel: ObservableObject {
+final class TranscriberViewModel: NSObject, ObservableObject {
     
     private var recordingSession: AVAudioSession?
     private var audioRecorder: AVAudioRecorder?
@@ -22,6 +22,13 @@ final class TranscriberViewModel: ObservableObject {
     
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
+    
+    func recordButtonTapped() {
+        print("Record button tapped.")
+
+        isRecording ? stopRecording() : startRecordingSession()
+        isRecording.toggle()
+    }
     
     func startRecordingSession() {
         
@@ -39,7 +46,7 @@ final class TranscriberViewModel: ObservableObject {
                     case false:
                         // show an alert
                         print("Recording is now allowed.")
-                        isRecording = false
+                        stopRecording()
                     }
                 }
             })
@@ -48,9 +55,34 @@ final class TranscriberViewModel: ObservableObject {
         }
     }
     
+ 
+    
+
+    
     func startRecording() {
         print("Started recording...")
-        startRecordingSession()
+        
+        let audioUrl = TranscriberViewModel.getAudioRecordingURL()
+        print(audioUrl.absoluteURL)
+        
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            
+            audioRecorder = try AVAudioRecorder(url: audioUrl, settings: settings)
+            //audioRecorder?.delegate = self
+            audioRecorder?.record()
+        } catch {
+            print("There was an error starting to record.")
+        }
+        
+        //audioRecorder?.record()
+        
     }
     
     func transcribeSpeech() {
@@ -59,5 +91,29 @@ final class TranscriberViewModel: ObservableObject {
     
     func stopRecording() {
         print("Stopped recording.")
+        
+        audioRecorder?.stop()
+        audioRecorder = nil
+    }
+    
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask)
+        let documentDirectory = paths[0]
+        return documentDirectory
+    }
+
+    class func getAudioRecordingURL() -> URL {
+        return getDocumentsDirectory().appendingPathComponent("audioRecording.m4a")
+    }
+    
+}
+
+extension TranscriberViewModel: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        print(flag)
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        print(error?.localizedDescription ?? "")
     }
 }

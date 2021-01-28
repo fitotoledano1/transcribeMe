@@ -21,7 +21,7 @@ struct TranscribeSpeechView: View {
                 TranscribedTextView(isRecording: $viewModel.isRecording,
                                     transcribedText: $viewModel.transcribedText)
                 Spacer()
-                RecordButton(isRecording: $viewModel.isRecording)
+                RecordButton(viewModel: viewModel)
             }
         }
     }
