@@ -23,6 +23,8 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
     
+    
+    // MARK: - Methods to start the recording workflow
     func recordButtonTapped() {
         print("Record button tapped.")
         
@@ -78,12 +80,6 @@ final class TranscriberViewModel: NSObject, ObservableObject {
         }
     }
     
-    func transcribeSpeech() {
-        print("Transcribing speech...")
-    }
-    
-    
-    
     class func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = paths[0]
@@ -93,9 +89,9 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     class func getAudioRecordingURL() -> URL {
         return getDocumentsDirectory().appendingPathComponent("audioRecording.m4a")
     }
-    
 }
 
+// MARK: - Methods at the end of the recording workflow.
 extension TranscriberViewModel: AVAudioRecorderDelegate {
     
     func stopRecording(success: Bool) {
@@ -130,3 +126,11 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
     }
     
 }
+
+// MARK: - Google Cloud Platform Speech-To-Text methods
+extension TranscriberViewModel {
+    func transcribeSpeech() {
+        print("Transcribing speech...")
+    }
+}
+
