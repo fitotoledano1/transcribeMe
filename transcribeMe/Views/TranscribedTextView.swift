@@ -13,7 +13,6 @@ struct TranscribedTextView: View {
     @Binding var transcribedText: String
     
     var body: some View {
-        /// This view's Text defaults to a friendly 
         Text(isRecording ? "Listening..." : transcribedText)
             .font(.title3)
             .fontWeight(.bold)

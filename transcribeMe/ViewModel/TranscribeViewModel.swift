@@ -7,11 +7,15 @@
 
 import Foundation
 import AVKit
+import AVFoundation
+
+var publicAudioUrl = ""
 
 final class TranscriberViewModel: NSObject, ObservableObject {
     
     private var recordingSession: AVAudioSession?
     private var audioRecorder: AVAudioRecorder?
+    private var audioPlayer: AVAudioPlayer?
     
     /// A published variable that controls whether the recorder is on or off.
     @Published var isRecording: Bool = false {
@@ -22,6 +26,8 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
+    
+    
     
 }
 
@@ -64,7 +70,7 @@ extension TranscriberViewModel {
         print("Started recording...")
         
         let audioUrl = TranscriberViewModel.getAudioRecordingURL()
-        print(audioUrl.absoluteURL)
+        publicAudioUrl = audioUrl.absoluteString
         
         let settings = [
             AVFormatIDKey: Int(kAudioFormatFLAC),
@@ -89,11 +95,11 @@ extension TranscriberViewModel {
     }
     
     class func getAudioRecordingURL() -> URL {
-        return getDocumentsDirectory().appendingPathComponent("audioRecording.m4a")
+        return getDocumentsDirectory().appendingPathComponent("audioRecording.flac")
     }
+    
 }
 
-// MARK: - Methods at the end of the recording workflow.
 extension TranscriberViewModel: AVAudioRecorderDelegate {
     
     func stopRecording(success: Bool) {
@@ -118,6 +124,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
         switch flag {
         case true:
             stopRecording(success: true)
+            uploadAudioFile()
         case false:
             stopRecording(success: false)
         }
@@ -126,14 +133,60 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         print(error?.localizedDescription ?? "")
     }
-    
 }
 
-// MARK: - Google Cloud Platform Speech-To-Text methods
+// MARK: - Google Cloud Platform methods
 extension TranscriberViewModel {
     func uploadAudioFile() {
         print("Uploading audio file to background...")
-        NetworkManager.shared.uploadAudioFile()
+        NetworkManager.shared.uploadAudioFile(localPath: publicAudioUrl) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let result):
+                print(result)
+                self.transcribedText = result
+            case .failure(let error):
+                print(error.localizedDescription ?? "Error")
+            }
+        }
+    }
+    
+    func synthesizeSpeech() {
+        NetworkManager.shared.synthesizeSpeech(forText: transcribedText) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                self.playAudio(audioData: data)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Playing synthesized speech
+
+extension TranscriberViewModel {
+    
+    func playAudio(audioData: Data) {
+
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("output.mp3")
+        do {
+            try audioData.write(to: url, options: .atomicWrite)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+
+                guard let player = audioPlayer else {
+                    return
+                }
+                player.prepareToPlay()
+                player.play()
+            } catch let error {
+                print(error)
+            }
+        } catch {
+            
+        }
     }
 }
 

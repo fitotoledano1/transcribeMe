@@ -1,0 +1,6 @@
+framework module Pods_transcribeMe {
+  umbrella header "Pods-transcribeMe-umbrella.h"
+
+  export *
+  module * { export * }
+}
