@@ -18,6 +18,12 @@ final class TranscriberViewModel: NSObject, ObservableObject {
         }
     }
     
+    @Published var isLoading: Bool = false {
+        didSet {
+            print("Published var 'isLoading' is now set to:", isLoading)
+        }
+    }
+    
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
     
@@ -139,6 +145,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
 // MARK: - Handling network calls to the Google Cloud Platform
 extension TranscriberViewModel {
     func uploadAudioFile() {
+        self.isLoading = true
         print("Uploading audio file to background...")
         NetworkManager.shared.uploadAudioFile(localPath: publicAudioUrl) { [weak self] result in
             guard let self = self else { return }
@@ -149,10 +156,12 @@ extension TranscriberViewModel {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            self.isLoading = false
         }
     }
     
     func synthesizeSpeech() {
+        self.isLoading = true
         NetworkManager.shared.synthesizeSpeech(forText: transcribedText) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -161,6 +170,7 @@ extension TranscriberViewModel {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            self.isLoading = false
         }
     }
 }
