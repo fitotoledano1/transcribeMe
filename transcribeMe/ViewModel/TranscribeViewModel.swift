@@ -13,6 +13,9 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     
     @Published var isRecording: Bool = false
     @Published var isLoading: Bool = false
+    @Published var isPresentingAlert: Bool = false
+    
+    @Published var alertItem: AlertItem? = nil
     
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
@@ -110,6 +113,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
             print("Audio was saved successfully.")
         case false:
             print("Recording stopped with an error.")
+            transcribedText = "Something went wrong. Please, try again."
         }
         
     }
@@ -142,6 +146,7 @@ extension TranscriberViewModel {
                 self.transcribedText = result
             case .failure(let error):
                 print(error.localizedDescription)
+                self.alertItem = AlertContext.invalidData
             }
             self.isLoading = false
         }
@@ -181,7 +186,7 @@ extension TranscriberViewModel {
                 print(error)
             }
         } catch {
-            
+            print(error.localizedDescription)
         }
     }
 }

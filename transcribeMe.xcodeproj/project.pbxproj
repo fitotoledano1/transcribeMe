@@ -10,6 +10,8 @@
 		9428A624CA3F790C82F2C498 /* Pods_transcribeMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B24D78A10D440D7E4ABEE5 /* Pods_transcribeMe.framework */; };
 		B00E682E25C44FA2009177AF /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E682D25C44FA2009177AF /* PlayButton.swift */; };
 		B00E683225C456DE009177AF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683125C456DE009177AF /* LoadingView.swift */; };
+		B00E683625C45A3B009177AF /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683525C45A3B009177AF /* AlertItem.swift */; };
+		B00E683925C45CE8009177AF /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683825C45CE8009177AF /* AlertContext.swift */; };
 		B014A42025C2CA6400018D6F /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A41F25C2CA6400018D6F /* Transcription.swift */; };
 		B014A43025C2DB1300018D6F /* TranscribedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A42F25C2DB1300018D6F /* TranscribedTextView.swift */; };
 		B014A43325C2DBB300018D6F /* TranscribeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */; };
@@ -30,6 +32,8 @@
 		A20280B46A425E34F7C31D9F /* Pods-transcribeMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-transcribeMe.debug.xcconfig"; path = "Target Support Files/Pods-transcribeMe/Pods-transcribeMe.debug.xcconfig"; sourceTree = "<group>"; };
 		B00E682D25C44FA2009177AF /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		B00E683125C456DE009177AF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		B00E683525C45A3B009177AF /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
+		B00E683825C45CE8009177AF /* AlertContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
 		B014A41F25C2CA6400018D6F /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
 		B014A42F25C2DB1300018D6F /* TranscribedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribedTextView.swift; sourceTree = "<group>"; };
 		B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeViewModel.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				B069AA1025C245BE006E87E6 /* Constants.swift */,
+				B00E683525C45A3B009177AF /* AlertItem.swift */,
+				B00E683825C45CE8009177AF /* AlertContext.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -278,7 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B00E683625C45A3B009177AF /* AlertItem.swift in Sources */,
 				B014A43025C2DB1300018D6F /* TranscribedTextView.swift in Sources */,
+				B00E683925C45CE8009177AF /* AlertContext.swift in Sources */,
 				B069AA0225C23877006E87E6 /* TranscribeSpeechView.swift in Sources */,
 				B00E682E25C44FA2009177AF /* PlayButton.swift in Sources */,
 				B00E683225C456DE009177AF /* LoadingView.swift in Sources */,

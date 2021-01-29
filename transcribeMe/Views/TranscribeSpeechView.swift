@@ -8,6 +8,8 @@
 import SwiftUI
 import AVFoundation
 
+
+
 struct TranscribeSpeechView: View {
     
     @StateObject var viewModel = TranscriberViewModel()
@@ -27,6 +29,11 @@ struct TranscribeSpeechView: View {
                 }
             }
             LoadingView(isLoading: $viewModel.isLoading)
+        }
+        .alert(item: $viewModel.alertItem) { alertItem in
+            Alert(title: Text(alertItem.title),
+                  message: Text(alertItem.message),
+                  dismissButton: alertItem.dismissButton)
         }
     }
 }

@@ -11,13 +11,17 @@ import Firebase
 import FirebaseStorage
 import AVKit
 
+enum TMError: String, Error {
+    case invalidData = "The data received from the server was invalid."
+}
+
 class NetworkManager {
     
     /// Creating the Singleton
     private init() {}
     static let shared = NetworkManager()
     
-    func uploadAudioFile(localPath: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func uploadAudioFile(localPath: String, completion: @escaping (Result<String, TMError>) -> Void) {
         
         let storage = Firebase.Storage.storage()
         
@@ -49,6 +53,7 @@ class NetworkManager {
                             completion(.success(String(transcript)))
                         case .failure(let error):
                             print(error.localizedDescription)
+                            completion(.failure(.invalidData))
                         }
                     }
             }
