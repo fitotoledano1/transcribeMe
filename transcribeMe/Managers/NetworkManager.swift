@@ -11,47 +11,6 @@ import Firebase
 import FirebaseStorage
 import AVKit
 
-/// Structs to send the request to the Google Cloud Platform Speech-to-Text API
-
-// Transcription Config
-struct TConfig: Encodable {
-    let encoding: String
-    let sampleRateHertz: Int
-    let languageCode: String
-    let enableWordTimeOffsets: Bool
-}
-
-// Transcription Audio
-struct TAudio: Encodable {
-    let uri: String
-}
-
-// Transcription Request
-struct TRequest: Encodable {
-    let config: TConfig
-    let audio: TAudio
-}
-
-// MARK: - Helper structs for better readability of the code when parsing the response from the Google Cloud Platform Speech-to-Text API.
-
-
-/// Helper structure that contains the array of results obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
-struct TranscriptionResults: Codable {
-    let results: [TrasncriptionResult]
-}
-
-/// Helper structure that contains the array of alternative transcriptions obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
-struct TrasncriptionResult: Codable {
-    let alternatives: [TranscriptionAlternative]
-}
-
-/// Helper structure that contains the transcription, and its precision, obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
-struct TranscriptionAlternative: Codable {
-    let transcript: String
-    let confidence: Double
-}
-
-// MARK: - Network Manager
 class NetworkManager {
     
     /// Creating the Singleton
@@ -65,21 +24,14 @@ class NetworkManager {
         // Create a root reference
         let storageRef = storage.reference()
         
-        // File located on disk
+        // File located on disk using the local passed at the function callsite (in TranscriberViewModel)
         let localFile = URL(string: localPath)!
         
         // Create a reference to the file you want to upload - for my billing, I'm making it overwrite the same file 'audioRecording.flac' instead of filling the bucket up with hundreds of megabytes of Audio files.
         let audioRef = storageRef.child("audios/audioRecording.flac")
         
         // Upload the file to the path "audios/audioRecording.flac"
-        let _ = audioRef.putFile(from: localFile, metadata: nil) { metadata, error in
-//            guard let metadata = metadata else {
-//                // Uh-oh, an error occurred!
-//                return
-//            }
-//            // Metadata contains file metadata such as size, content-type.
-//            let size = metadata.size
-            // You can also access to download URL after upload.
+        audioRef.putFile(from: localFile, metadata: nil) { metadata, error in
             audioRef.downloadURL { (url, error) in
                 
                 let url = URL(string: "https://speech.googleapis.com/v1/speech:recognize?key=\(Constants.clientKey)")!
