@@ -133,42 +133,4 @@ class NetworkManager {
                 }
             }
     }
-//
-//        // Create a URLRequest for an API endpoint
-//        let url = URL(string: endpoint)!
-//        var request = URLRequest(url: url)
-//
-//        let body = [
-//            "input": ["text": text],
-//            "voice": [
-//                "languageCode": "en-GB",
-//                "name": "en-GB-Standard-A",
-//                "ssmlGender": "FEMALE"
-//            ],
-//            "audioConfig": ["audioEncoding": "MP3"]
-//        ]
-//
-//        let bodyData = try? JSONSerialization.data(withJSONObject: body, options: [])
-//        request.httpMethod = "POST"
-//        request.httpBody = bodyData
-//
-//        // Create the HTTP request
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { (data, response, error) in
-//            if error == nil {
-//                guard let response = response as? HTTPURLResponse else { return }
-//                guard let data = data else { return }
-//                print(response)
-//                print(data.debugDescription)
-//
-////                let dictionary = data as! [String: Any]
-////                let audioContent = dictionary["audioContent"] as! String
-////
-////                let audioData = Data(base64Encoded: audioContent, options: [])
-////                if let audData = audioData {
-////                    completion(.success(audData))
-////                }
-//            }
-//        }
-//        task.resume()
 }
