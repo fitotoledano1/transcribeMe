@@ -1,7 +1,6 @@
 # transcribeMe
 
-!(https://ibb.co/NF5J7P1)
-
+![[My image](fitotoledano1.github.com/transcribeMe/github.png)]
 
 Dear team at Speechify,
 
