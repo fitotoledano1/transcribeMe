@@ -26,16 +26,7 @@ struct TranscribeSpeechView: View {
                     RecordButton(viewModel: viewModel)
                 }
             }
-            if viewModel.isLoading {
-                ZStack {
-                    Color(.systemBackground)
-                        .ignoresSafeArea(.all)
-                        .opacity(0.67)
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: Color(.systemGray)))
-                        .scaleEffect(1.67)
-                }
-            }
+            LoadingView(isLoading: $viewModel.isLoading)
         }
     }
 }

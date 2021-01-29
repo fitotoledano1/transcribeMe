@@ -11,18 +11,8 @@ import AVFoundation
 
 final class TranscriberViewModel: NSObject, ObservableObject {
     
-    /// A published variable that controls whether the recorder is on or off.
-    @Published var isRecording: Bool = false {
-        didSet {
-            print("Published var 'isRecording' is now set to:", isRecording)
-        }
-    }
-    
-    @Published var isLoading: Bool = false {
-        didSet {
-            print("Published var 'isLoading' is now set to:", isLoading)
-        }
-    }
+    @Published var isRecording: Bool = false
+    @Published var isLoading: Bool = false
     
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
@@ -34,17 +24,16 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     /// Route that will contain the Audio URL
     private var publicAudioUrl = ""
     
-}
-
-// MARK: - Methods to start the recording workflow
-extension TranscriberViewModel {
     func recordButtonTapped() {
         print("Record button tapped.")
         
         isRecording ? stopRecording(success: true) : startRecordingSession()
         isRecording.toggle()
     }
-    
+}
+
+// MARK: - Start the recording workflow
+extension TranscriberViewModel {
     func startRecordingSession() {
         
         recordingSession = AVAudioSession.sharedInstance()
@@ -70,8 +59,6 @@ extension TranscriberViewModel {
             print("There was an error with the Audio Session.")
         }
     }
-    
-    
     
     func startRecording() {
         print("Started recording...")
@@ -138,7 +125,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        print(error?.localizedDescription ?? "")
+        print(error?.localizedDescription ?? "There was an encoding error in the Audio Recorder.")
     }
 }
 
@@ -176,11 +163,9 @@ extension TranscriberViewModel {
 }
 
 // MARK: - Playing synthesized speech
-
 extension TranscriberViewModel {
     
     func playAudio(audioData: Data) {
-
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("output.mp3")
         do {
             try audioData.write(to: url, options: .atomicWrite)
