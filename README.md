@@ -1,7 +1,5 @@
 # transcribeMe
 
-![[My image](fitotoledano1.github.com/transcribeMe/github.png)]
-
 Dear team at Speechify,
 
 Thank you for your interest and for reaching out. I have really enjoyed building this little project - here are some of the priorities I had when building it:
