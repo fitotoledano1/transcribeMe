@@ -21,7 +21,10 @@ struct TranscribeSpeechView: View {
                 TranscribedTextView(isRecording: $viewModel.isRecording,
                                     transcribedText: $viewModel.transcribedText)
                 Spacer()
-                RecordButton(viewModel: viewModel)
+                VStack(spacing: 20) {
+                    PlayButton(viewModel: viewModel)
+                    RecordButton(viewModel: viewModel)
+                }
             }
         }
     }

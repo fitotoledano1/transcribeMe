@@ -27,8 +27,6 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
     
-    
-    
 }
 
 // MARK: - Methods to start the recording workflow
@@ -135,7 +133,7 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
     }
 }
 
-// MARK: - Google Cloud Platform methods
+// MARK: - Handling network calls to the Google Cloud Platform
 extension TranscriberViewModel {
     func uploadAudioFile() {
         print("Uploading audio file to background...")
@@ -146,7 +144,7 @@ extension TranscriberViewModel {
                 print(result)
                 self.transcribedText = result
             case .failure(let error):
-                print(error.localizedDescription ?? "Error")
+                print(error.localizedDescription)
             }
         }
     }

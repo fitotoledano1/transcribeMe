@@ -11,12 +11,9 @@ import Firebase
 import FirebaseStorage
 import AVKit
 
-// Structs to send the request to the Google Cloud Platform Speech-to-Text API
-struct TRequest: Encodable {
-    let config: TConfig
-    let audio: TAudio
-}
+/// Structs to send the request to the Google Cloud Platform Speech-to-Text API
 
+// Transcription Config
 struct TConfig: Encodable {
     let encoding: String
     let sampleRateHertz: Int
@@ -24,25 +21,37 @@ struct TConfig: Encodable {
     let enableWordTimeOffsets: Bool
 }
 
+// Transcription Audio
 struct TAudio: Encodable {
     let uri: String
 }
 
-// Structs to parse the response to the Google Cloud Platform Speech-to-Text API
+// Transcription Request
+struct TRequest: Encodable {
+    let config: TConfig
+    let audio: TAudio
+}
+
+// MARK: - Helper structs for better readability of the code when parsing the response from the Google Cloud Platform Speech-to-Text API.
+
+
+/// Helper structure that contains the array of results obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
 struct TranscriptionResults: Codable {
     let results: [TrasncriptionResult]
 }
 
+/// Helper structure that contains the array of alternative transcriptions obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
 struct TrasncriptionResult: Codable {
     let alternatives: [TranscriptionAlternative]
 }
 
+/// Helper structure that contains the transcription, and its precision, obtained from the Speech-to-Text API in Google Cloud Platform. For easier readablity of the code when parsing the response in the uploadAudio() function.
 struct TranscriptionAlternative: Codable {
     let transcript: String
     let confidence: Double
 }
 
-
+// MARK: - Network Manager
 class NetworkManager {
     
     /// Creating the Singleton
@@ -59,23 +68,19 @@ class NetworkManager {
         // File located on disk
         let localFile = URL(string: localPath)!
         
-        // Create a reference to the file you want to upload
+        // Create a reference to the file you want to upload - for my billing, I'm making it overwrite the same file 'audioRecording.flac' instead of filling the bucket up with hundreds of megabytes of Audio files.
         let audioRef = storageRef.child("audios/audioRecording.flac")
         
-        // Upload the file to the path "images/rivers.jpg"
-        let uploadTask = audioRef.putFile(from: localFile, metadata: nil) { metadata, error in
-            guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                return
-            }
-            // Metadata contains file metadata such as size, content-type.
-            let size = metadata.size
+        // Upload the file to the path "audios/audioRecording.flac"
+        let _ = audioRef.putFile(from: localFile, metadata: nil) { metadata, error in
+//            guard let metadata = metadata else {
+//                // Uh-oh, an error occurred!
+//                return
+//            }
+//            // Metadata contains file metadata such as size, content-type.
+//            let size = metadata.size
             // You can also access to download URL after upload.
             audioRef.downloadURL { (url, error) in
-                guard let audioURL = url else {
-                    // Uh-oh, an error occurred!
-                    return
-                }
                 
                 let url = URL(string: "https://speech.googleapis.com/v1/speech:recognize?key=\(Constants.clientKey)")!
                 
@@ -100,7 +105,6 @@ class NetworkManager {
     
     func synthesizeSpeech(forText text: String, completion: @escaping (Result<Data, Error>) -> Void) {
         let endpoint = "https://texttospeech.googleapis.com/v1/text:synthesize?key=\(Constants.clientKey)"
-        
         let params = [
             "input": ["text": text],
             "voice": [
@@ -110,16 +114,16 @@ class NetworkManager {
             ],
             "audioConfig": ["audioEncoding": "MP3"]
         ]
-        
+
         AF.request(endpoint, method: .post, parameters: params, encoder: JSONParameterEncoder.default)
             .responseJSON { (dataResponse) in
                 print(dataResponse)
-                
+
                 switch dataResponse.result {
                 case .success(let dictionary):
                     let dictionary = dictionary as! [String: Any]
                     let audioContent = dictionary["audioContent"] as! String
-                    
+
                     let audioData = Data(base64Encoded: audioContent, options: [])
                     if let audData = audioData {
                         completion(.success(audData))
@@ -129,4 +133,42 @@ class NetworkManager {
                 }
             }
     }
+//
+//        // Create a URLRequest for an API endpoint
+//        let url = URL(string: endpoint)!
+//        var request = URLRequest(url: url)
+//
+//        let body = [
+//            "input": ["text": text],
+//            "voice": [
+//                "languageCode": "en-GB",
+//                "name": "en-GB-Standard-A",
+//                "ssmlGender": "FEMALE"
+//            ],
+//            "audioConfig": ["audioEncoding": "MP3"]
+//        ]
+//
+//        let bodyData = try? JSONSerialization.data(withJSONObject: body, options: [])
+//        request.httpMethod = "POST"
+//        request.httpBody = bodyData
+//
+//        // Create the HTTP request
+//        let session = URLSession.shared
+//        let task = session.dataTask(with: request) { (data, response, error) in
+//            if error == nil {
+//                guard let response = response as? HTTPURLResponse else { return }
+//                guard let data = data else { return }
+//                print(response)
+//                print(data.debugDescription)
+//
+////                let dictionary = data as! [String: Any]
+////                let audioContent = dictionary["audioContent"] as! String
+////
+////                let audioData = Data(base64Encoded: audioContent, options: [])
+////                if let audData = audioData {
+////                    completion(.success(audData))
+////                }
+//            }
+//        }
+//        task.resume()
 }
