@@ -12,6 +12,7 @@
 		B00E683225C456DE009177AF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683125C456DE009177AF /* LoadingView.swift */; };
 		B00E683625C45A3B009177AF /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683525C45A3B009177AF /* AlertItem.swift */; };
 		B00E683925C45CE8009177AF /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E683825C45CE8009177AF /* AlertContext.swift */; };
+		B00E684B25C460FB009177AF /* TMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00E684A25C460FB009177AF /* TMError.swift */; };
 		B014A42025C2CA6400018D6F /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A41F25C2CA6400018D6F /* Transcription.swift */; };
 		B014A43025C2DB1300018D6F /* TranscribedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A42F25C2DB1300018D6F /* TranscribedTextView.swift */; };
 		B014A43325C2DBB300018D6F /* TranscribeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */; };
@@ -34,6 +35,7 @@
 		B00E683125C456DE009177AF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B00E683525C45A3B009177AF /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		B00E683825C45CE8009177AF /* AlertContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
+		B00E684A25C460FB009177AF /* TMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMError.swift; sourceTree = "<group>"; };
 		B014A41F25C2CA6400018D6F /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
 		B014A42F25C2DB1300018D6F /* TranscribedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribedTextView.swift; sourceTree = "<group>"; };
 		B014A43225C2DBB300018D6F /* TranscribeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscribeViewModel.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				B069AA1025C245BE006E87E6 /* Constants.swift */,
 				B00E683525C45A3B009177AF /* AlertItem.swift */,
 				B00E683825C45CE8009177AF /* AlertContext.swift */,
+				B00E684A25C460FB009177AF /* TMError.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				B00E683225C456DE009177AF /* LoadingView.swift in Sources */,
 				B069AA0025C23877006E87E6 /* transcribeMeApp.swift in Sources */,
 				B014A43625C2DE3D00018D6F /* RecordButton.swift in Sources */,
+				B00E684B25C460FB009177AF /* TMError.swift in Sources */,
 				B09182E225C2F7230040F55B /* NetworkManager.swift in Sources */,
 				B014A42025C2CA6400018D6F /* Transcription.swift in Sources */,
 				B069AA1125C245BE006E87E6 /* Constants.swift in Sources */,

@@ -21,6 +21,8 @@ struct PlayButton: View {
                 .frame(width: 300, height: 50, alignment: .center)
                 .background(Color(.systemGreen))
                 .cornerRadius(8)
+                .opacity(viewModel.isRecording ? 0.33 : 1) // reducing the opacity of the button to make obvious to the user that it's disabled when recording
         })
+        .disabled(viewModel.isRecording) // disabling this button when recording :)
     }
 }

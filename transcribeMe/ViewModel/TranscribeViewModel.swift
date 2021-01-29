@@ -161,6 +161,7 @@ extension TranscriberViewModel {
                 self.playAudio(audioData: data)
             case .failure(let error):
                 print(error.localizedDescription)
+                self.alertItem = AlertContext.unableToComplete
             }
             self.isLoading = false
         }
@@ -184,9 +185,11 @@ extension TranscriberViewModel {
                 player.play()
             } catch let error {
                 print(error)
+                alertItem = AlertContext.playbackError
             }
         } catch {
             print(error.localizedDescription)
+            alertItem = AlertContext.playbackError
         }
     }
 }

@@ -8,8 +8,6 @@
 import SwiftUI
 import AVFoundation
 
-
-
 struct TranscribeSpeechView: View {
     
     @StateObject var viewModel = TranscriberViewModel()
