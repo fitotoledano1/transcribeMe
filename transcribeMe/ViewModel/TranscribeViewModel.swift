@@ -9,13 +9,7 @@ import Foundation
 import AVKit
 import AVFoundation
 
-var publicAudioUrl = ""
-
 final class TranscriberViewModel: NSObject, ObservableObject {
-    
-    private var recordingSession: AVAudioSession?
-    private var audioRecorder: AVAudioRecorder?
-    private var audioPlayer: AVAudioPlayer?
     
     /// A published variable that controls whether the recorder is on or off.
     @Published var isRecording: Bool = false {
@@ -26,6 +20,13 @@ final class TranscriberViewModel: NSObject, ObservableObject {
     
     /// A published variable that will contain the transcribed text received from the Google Cloud Speech-to-text API. Initialized with a user-friendly placeholder that indicates the user how to start the application workflow.
     @Published var transcribedText: String = "Press the record button to start."
+    
+    private var recordingSession: AVAudioSession?
+    private var audioRecorder: AVAudioRecorder?
+    private var audioPlayer: AVAudioPlayer?
+    
+    /// Route that will contain the Audio URL
+    private var publicAudioUrl = ""
     
 }
 
@@ -63,6 +64,8 @@ extension TranscriberViewModel {
             print("There was an error with the Audio Session.")
         }
     }
+    
+    
     
     func startRecording() {
         print("Started recording...")
