@@ -1,6 +1,6 @@
 # transcribeMe
 
-![alt text](https://ibb.co/NF5J7P1)
+!(https://ibb.co/NF5J7P1)
 
 
 Dear team at Speechify,
