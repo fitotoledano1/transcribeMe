@@ -52,14 +52,15 @@ extension TranscriberViewModel {
                         print("Recording session session started successfully.")
                         startRecording()
                     case false:
-                        // show an alert
                         print("User didn't grant transcribeMe permissions to access the Microphone.")
                         stopRecording(success: false)
+                        alertItem = AlertContext.requiresMicrophoneAccess
                     }
                 }
             })
         } catch {
             print("There was an error with the Audio Session.")
+            stopRecording(success: false)
         }
     }
     
@@ -116,6 +117,8 @@ extension TranscriberViewModel: AVAudioRecorderDelegate {
             transcribedText = "Something went wrong. Please, try again."
         }
         
+        isRecording = false
+        
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
@@ -145,7 +148,7 @@ extension TranscriberViewModel {
                 print(result)
                 self.transcribedText = result
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.rawValue)
                 self.alertItem = AlertContext.invalidData
             }
             self.isLoading = false
@@ -160,7 +163,7 @@ extension TranscriberViewModel {
             case .success(let data):
                 self.playAudio(audioData: data)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.rawValue)
                 self.alertItem = AlertContext.unableToComplete
             }
             self.isLoading = false

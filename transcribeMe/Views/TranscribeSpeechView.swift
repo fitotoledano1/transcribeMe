@@ -31,7 +31,7 @@ struct TranscribeSpeechView: View {
         .alert(item: $viewModel.alertItem) { alertItem in
             Alert(title: Text(alertItem.title),
                   message: Text(alertItem.message),
-                  dismissButton: alertItem.dismissButton)
+                  dismissButton: alertItem.alertButton)
         }
     }
 }

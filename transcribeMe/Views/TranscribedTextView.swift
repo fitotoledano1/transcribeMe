@@ -13,7 +13,7 @@ struct TranscribedTextView: View {
     @Binding var transcribedText: String
     
     var body: some View {
-        Text(isRecording ? "Listening..." : transcribedText)
+        Text(isRecording ? "Listening..." : transcribedText) // to make even more clear to the user that we're recording
             .font(.title3)
             .fontWeight(.bold)
             .padding()

@@ -10,4 +10,5 @@ import Foundation
 /// Custom transcribeMe Error to identify the cause of potential failures in our Network Calls
 enum TMError: String, Error {
     case invalidData = "The data received from the server was invalid."
+    case unableToComplete = "We were unable to complete your request."
 }

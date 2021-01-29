@@ -55,7 +55,7 @@ class NetworkManager {
         }
     }
     
-    func synthesizeSpeech(forText text: String, completion: @escaping (Result<Data, Error>) -> Void) {
+    func synthesizeSpeech(forText text: String, completion: @escaping (Result<Data, TMError>) -> Void) {
         let endpoint = "https://texttospeech.googleapis.com/v1/text:synthesize?key=\(Constants.clientKey)"
         let params = [
             "input": ["text": text],
@@ -73,15 +73,21 @@ class NetworkManager {
 
                 switch dataResponse.result {
                 case .success(let dictionary):
-                    let dictionary = dictionary as! [String: Any]
-                    let audioContent = dictionary["audioContent"] as! String
-
+                    guard
+                        let dictionary = dictionary as? [String: Any],
+                        let audioContent = dictionary["audioContent"] as? String
+                    else {
+                        completion(.failure(.invalidData))
+                        return
+                    }
+                    
                     let audioData = Data(base64Encoded: audioContent, options: [])
                     if let audData = audioData {
                         completion(.success(audData))
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    completion(.failure(.unableToComplete))
                 }
             }
     }
