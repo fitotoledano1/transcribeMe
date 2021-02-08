@@ -2,7 +2,7 @@
 
 Dear team at Speechify,
 
-Thank you for your interest and for reaching out. I have really enjoyed building this little project - here are some of the priorities I had when building it:
+Here are some of the priorities I had when building it:
 
 - Clarity in the User Experience. Every part of the User Interfaces supports the mission of the application, and gives deference to the workflow that is happening.
 e.g. Recording:
