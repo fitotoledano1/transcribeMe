@@ -1,8 +1,6 @@
 # transcribeMe
 
-Dear team at Speechify,
-
-Here are some of the priorities I had when building it:
+Here are some of the priorities I had when building this project:
 
 - Clarity in the User Experience. Every part of the User Interfaces supports the mission of the application, and gives deference to the workflow that is happening.
 e.g. Recording:
